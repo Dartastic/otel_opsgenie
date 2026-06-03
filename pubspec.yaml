@@ -1,6 +1,6 @@
 name: otel_opsgenie
 description: OpenTelemetry bridge for Atlassian Opsgenie alerts API.
-version: 0.1.0-beta.1-wip
+version: 0.1.0-beta.1
 repository: https://github.com/dartastic/otel_opsgenie
 homepage: https://dartastic.io
 publish_to: https://pub.dartastic.io
