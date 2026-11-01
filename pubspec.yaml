@@ -2,7 +2,7 @@ name: otel_opsgenie
 description: >-
   OpenTelemetry instrumentation for opsgenie by Dartastic.io. Adds standard
   OpenTelemetry observability to applications that use opsgenie.
-version: 0.1.0
+version: 0.1.1-wip
 repository: https://github.com/dartastic/otel_opsgenie
 homepage: https://dartastic.io
 
