@@ -1,17 +1,20 @@
-// Licensed under the Dartastic Pro Software License Agreement.
+// Licensed under the Apache License, Version 2.0
 // Copyright 2025-2026 Mindful Software LLC d/b/a Dartastic.io, All rights reserved.
 
-import 'package:dartastic_opentelemetry/dartastic_opentelemetry.dart';
+import 'package:dartastic_opentelemetry_api/dartastic_opentelemetry_api.dart';
 
 import 'otel_opsgenie_suppression.dart';
 
 const _tracerName = 'dartastic_otel_libs_opsgenie';
 
-Tracer _tracer() => OTel.tracerProvider().getTracer(_tracerName);
+APITracer _tracer() => OTelAPI.tracerProvider().getTracer(_tracerName);
 
 /// Pair returned from `tracedOpsgenieAlert` callback.
 class OpsgenieAlertResult<T> {
+  /// Creates a result.
   const OpsgenieAlertResult({required this.value, this.alertId});
+
+  /// The value returned to the caller.
   final T value;
   final String? alertId;
 }
@@ -39,20 +42,20 @@ Future<T> tracedOpsgenieAlert<T>({
   final span = _tracer().startSpan(
     'opsgenie alert.$action',
     kind: SpanKind.client,
-    attributes: OTel.attributesFromMap(m),
+    attributes: OTelAPI.attributesFromMap(m),
   );
   try {
     final r = await invoke();
     if (r.alertId != null) {
-      span.addAttributes(OTel.attributes([
-        OTel.attributeString('opsgenie.alert.id', r.alertId!),
+      span.addAttributes(OTelAPI.attributes([
+        OTelAPI.attributeString('opsgenie.alert.id', r.alertId!),
       ]));
     }
     return r.value;
   } catch (e, st) {
-    span.addAttributes(OTel.attributes([
-      OTel.attributeString(
-        ErrorResource.errorType.key,
+    span.addAttributes(OTelAPI.attributes([
+      OTelAPI.attributeString(
+        ErrorAttributes.errorType.key,
         e.runtimeType.toString(),
       ),
     ]));
